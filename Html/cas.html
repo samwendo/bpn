@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap css cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Bootstrap scripts cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <!-- jquery script cdn -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Document</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+</head>
+<style>
+    .table-sortable tbody tr {
+        cursor: move;
+    }
+</style>
+
+<body>
+    <!-- start of navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/Html/rigion.html">Back
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- end of navbar -->
+    <!-- start of form -->
+    <form action="post" name="myFomr" method="get">
+        <table class="table table-hover" id="tab_logic">
+            <thead>
+                <tr>
+
+                    <th class="text-center" scope="col">INDEX</th>
+                    <th class="text-center" scope="col">Name</th>
+                    <th class="text-center" scope="col">Age</th>
+                    <th class="text-center" scope="col">Residents</th>
+                    <th class="text-center" scope="col">Contacts</th>
+                    <th class="text-center" scope="col">1st time</th>
+                    <th class="text-center" scope="col">2nd time</th>
+                    <th class="text-center" scope="col">Results</th>
+                    <th class="text-center" scope="col">REMARKS</th>
+                    <th class="text-center" scope="col">Date</th>
+                    <th class="text-center" scope="col">Venue</th>
+
+
+
+                    <th class="text-center" style="border-top: 1px solid #ffffff; border-right: 1px solid #ffffff;">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id='one' data-id="0" class="hidden">
+
+                    <td onclick="random()">1</td>
+
+                    <td data-name="desc">
+                        <input type="text" id="name" placeholder="Name" required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="number" id="age" placeholder="age" value="age" required></input>
+                    </td>
+
+                    <td data-name="desc">
+                        <input type="text" id="residenc" placeholder="residence"  required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="number" id="Contact " placeholder="contact"  required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="checkbox" id="1st time" placeholder="1st time"  required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="checkbox" id="2nd time" placeholder="2nd time" required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="text" id="results" placeholder="results" 
+                            required></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="text" id="remarks" placeholder="remarks" ></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="datetime-local" id="date" placeholder="Date" ></input>
+                    </td>
+                    <td data-name="desc">
+                        <input type="text" id="venue" placeholder="venue" ></input>
+                    </td>
+
+
+                    <td data-name="del">
+                        <button name="del0" class='btn btn-danger glyphicon glyphicon-remove row-remove'><span
+                                aria-hidden="true">Delete</span></button>
+                        <button id="Submi" type="submit" name="bub" class='btn btn-success '><span
+                                aria-hidden="true">Submit</span></button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+        <a id="add_row" class="btn btn-primary float-right">Add Row</a>
+        </div>
+
+    </form>
+    <!-- end of form -->
+    <script>
+
+        function random() {
+
+            document.getElementById("one").innerHTML = Math.floor(Math.random() * 10);
+        }
+
+        $(document).ready(function () {
+            $("#add_row").on("click", function () {
+                // Dynamic Rows Code
+
+
+                // Get max row id and set new id
+
+
+                var newid = 0;
+                $.each($("#tab_logic tr"), function () {
+                    if (parseInt($(this).data("id")) > newid) {
+                        newid = parseInt($(this).data("id"));
+                    }
+                });
+                newid++;
+
+                var tr = $("<tr></tr>", {
+                    id: "addr" + newid,
+                    "data-id": newid
+                });
+
+                // loop through each td and create new elements with name of newid
+
+
+                $.each($("#tab_logic tbody tr:nth(0) td"), function () {
+                    var td;
+                    var cur_td = $(this);
+
+                    var children = cur_td.children();
+
+                    // add new td and element if it has a name
+
+                    if ($(this).data("name") !== undefined) {
+                        td = $("<td></td>", {
+                            "data-name": $(cur_td).data("name")
+                        });
+
+                        var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
+                        c.attr("name", $(cur_td).data("name") + newid);
+                        c.appendTo($(td));
+                        td.appendTo($(tr));
+                    } else {
+                        td = $("<td></td>", {
+                            'text': $('#tab_logic tr').length
+                        }).appendTo($(tr));
+                    }
+                });
+
+                // add delete button and td
+                /*
+                $("<td></td>").append(
+                    $("<button class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>")
+                        .click(function() {
+                            $(this).closest("tr").remove();
+                        })
+                ).appendTo($(tr));
+                */
+
+                // add the new row
+                $(tr).appendTo($('#tab_logic'));
+
+                $(tr).find("td button.row-remove").on("click", function () {
+                    $(this).closest("tr").remove();
+                });
+            });
+
+
+
+
+            // Sortable Code
+            var fixHelperModified = function (e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+
+                $helper.children().each(function (index) {
+                    $(this).width($originals.eq(index).width())
+                });
+
+                return $helper;
+            };
+
+            $(".table-sortable tbody").sortable({
+                helper: fixHelperModified
+            }).disableSelection();
+
+            $(".table-sortable thead").disableSelection();
+
+
+
+            $("#add_row").trigger("click");
+        });
+        // passvalue
+
+        // Send (Pass) Data (Values) from one page to another page
+        $(document).ready(function () {
+            $("#Submi").click(function () {
+                var data = $("#myForm").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "insert.php",
+                    data: data,
+                    success: function () {
+                        alert("Data Inserted Successfully");
+                    }
+                });
+                return false;
+            });
+        });
+
+
+        // // submit data to a get form
+        // $("#submit").click(function () {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "get.html",
+        //         data: $("#myForm").serialize(),
+        //         success: function (data) {
+        //             $("#result").html(data);
+        //         }
+        //     });
+        // });
+    </script>
+</body>
+
+</html>
